@@ -107,6 +107,8 @@ public class JSONRPC {
         
         if let identifier = json["id"].flatMap(RequestIdentifier.init) {
             handlers[identifier]?(json)
+        } else if let method = json["method"] as? String {
+            NSNotificationCenter.defaultCenter().postNotificationName(method, object: json["params"])
         }
     }
     
