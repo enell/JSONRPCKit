@@ -13,6 +13,8 @@ public protocol RequestType {
     
     var method: String { get }
     
+    var handle: Int { get }
+    
     var params: AnyObject? { get }
     
     func buildJSON() -> [String: AnyObject]
@@ -23,13 +25,19 @@ public protocol RequestType {
 public extension RequestType {
     
     var params: AnyObject? {
-        return nil
+        return []
+    }
+    
+    var handle: Int {
+        return -1
     }
     
     func buildJSON() -> [String: AnyObject] {
         var json: [String: AnyObject] = [:]
         
         json["method"] = method
+        
+        json["handle"] = handle
         
         if let params = params {
             json["params"] = params
